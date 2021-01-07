@@ -8,6 +8,8 @@
         echo $this->Form->control('name');
         echo $this->Form->hidden('finished', ['value'=>0]);
         echo $this->Form->control('endtime');
+        echo $this->Form->control('description');
+        echo $this->Form->file('image');
     ?>
 </fieldset>
 <?= $this->Form->button(__('Submit')) ?>
