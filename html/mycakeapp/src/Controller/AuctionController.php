@@ -70,7 +70,20 @@ class AuctionController extends AuctionBaseController
     public function add(){
         $biditem = $this->Biditems->newEntity();
         if($this->request->is('post')){
-            $biditem = $this->Biditems->patchEntity($biditem, $this->request->getData());
+            $file = $this->request->getData('image');
+            $filePath = '../webroot/img/'.date("YmdHis").$file['name'];
+            move_uploaded_file($file['tmp_name'],$filePath);
+
+            $data = [
+                'user_id' => $this->request->getData('user_id'),
+                'name' => $this->request->getData('name'),
+                'finished' => $this->request->getData('finished'),
+                'endtime' => $this->request->getData('endtime'),
+                'description' => $this->request->getData('description'),
+                'image' => date("YmdHis").$file['name']
+            ];
+            
+            $biditem = $this->Biditems->newEntity($data);
             if($this->Biditems->save($biditem)){
                 $this->Flash->success(__('保存しました。'));
                 return $this->redirect(['action'=>'index']);
