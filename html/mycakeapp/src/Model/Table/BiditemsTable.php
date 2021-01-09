@@ -88,10 +88,14 @@ class BiditemsTable extends Table
             ->notEmptyString('description');
 
         $validator
-            ->scalar('description')
-            ->uploadedFile('desctiption', $options = [ 'types' => 'jpg','png'] , 'create');
+            ->scalar('image')
+            ->add('image', 'extension', [
+                'rule' => ['extension', ['jpg', 'png']],
+                'message' => '拡張子が jpg か png のファイルを選択してください',
+            ]);
 
         return $validator;
+
     }
 
     /**

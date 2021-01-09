@@ -10,6 +10,7 @@
         echo $this->Form->control('endtime');
         echo $this->Form->control('description',['type' => 'textarea']);
         echo $this->Form->file('image');
+        echo $this->Form->error('image');
     ?>
 </fieldset>
 <?= $this->Form->button(__('Submit')) ?>
