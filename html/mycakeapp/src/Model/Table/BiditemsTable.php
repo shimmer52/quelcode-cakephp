@@ -87,11 +87,13 @@ class BiditemsTable extends Table
             ->requirePresence('description', 'create')
             ->notEmptyString('description');
 
+        $validator->setProvider('custom', 'App\Model\Validation\CustomValidation');
         $validator
             ->scalar('image')
-            ->add('image', 'extension', [
-                'rule' => ['extension', ['jpg', 'png']],
-                'message' => '拡張子が jpg か png のファイルを選択してください',
+            ->add('image', '', [
+                'rule' => 'uploadFile',
+                'provider' => 'custom',
+                'message' => 'ファイルの形式はjpgもしくはpngを選択してください'
             ]);
 
         return $validator;
