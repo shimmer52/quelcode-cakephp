@@ -71,8 +71,7 @@ class AuctionController extends AuctionBaseController
         $biditem = $this->Biditems->newEntity();
         if($this->request->is('post')){
             $file = $this->request->getData('image');
-            $filePath = '../webroot/img/'.date("YmdHis").$file['name'];
-            move_uploaded_file($file['tmp_name'],$filePath);
+            $filePath = '../webroot/img/item_images/'.date("YmdHis").$file['name'];
 
             $data = [
                 'user_id' => $this->request->getData('user_id'),
@@ -80,12 +79,13 @@ class AuctionController extends AuctionBaseController
                 'finished' => $this->request->getData('finished'),
                 'endtime' => $this->request->getData('endtime'),
                 'description' => $this->request->getData('description'),
-                'image' => date("YmdHis").$file['name']
+                'image' => "item_images/".date("YmdHis").$file['name']
             ];
             
             $biditem = $this->Biditems->newEntity($data);
             if($this->Biditems->save($biditem)){
                 $this->Flash->success(__('保存しました。'));
+                move_uploaded_file($file['tmp_name'],$filePath);
                 return $this->redirect(['action'=>'index']);
             }
             $this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
